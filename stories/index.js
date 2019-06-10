@@ -4,6 +4,10 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, text, boolean, select } from '@storybook/addon-knobs';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 storiesOf('Button', module)
 	.addDecorator(withKnobs)
@@ -53,3 +57,25 @@ storiesOf('Field', module).addDecorator(withKnobs).add('TextField', () => {
 		/>
 	);
 }, { notes: 'A very simple textField component' });
+
+storiesOf('Select', module).addDecorator(withKnobs).add('SelectField', () => {
+	const name = text('Label', 'Age');
+	const items = { None: '', Ten: 10, Twenty: 20, Thirty: 30 };
+	const value = select('Value', items, '');
+
+	const renderMenuItems = () => Object.keys(items).map((key) => <MenuItem value={items[key]}>{key}</MenuItem>);
+
+	return (
+		<FormControl>
+			<InputLabel htmlFor="age-simple">{name}</InputLabel>
+			<Select
+				disabled={boolean('Disabled', false)}
+				value={value}
+				onChange={action('SelectField changed')}
+				style={{ width: '150px' }}
+			>
+				{renderMenuItems()}
+			</Select>
+		</FormControl>
+	);
+}, { notes: 'A very simple selectField component' });

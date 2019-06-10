@@ -1,39 +1,38 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, text, boolean, object } from '@storybook/addon-knobs';
+import { withKnobs, text, boolean, select } from '@storybook/addon-knobs';
+import Button from '@material-ui/core/Button';
 
 storiesOf('Button', module)
 	.addDecorator(withKnobs)
 	.add(
 		'with text',
 		() => {
-			const style = {
-				backgroundColor: '#FFF',
-				border: '1px solid purple',
-				borderRadius: 2,
-				outline: 0,
-				fontSize: 15,
-				cursor: 'pointer',
-			};
 			const name = text('Name', 'Click me!');
+			const colors = {
+				primary: 'primary',
+				secondary: 'secondary',
+			};
+			const color = select('Color', colors, colors.primary);
 
 			return (
-				<button
+				<Button
 					disabled={boolean('Disabled', false)}
-					style={object('style', style)}
+					variant="contained"
+					color={color}
 					onClick={action('clicked')}
 				>
 					{name}
-				</button>
+				</Button>
 			);
 		},
 		{ notes: 'A very simple button component' }
 	)
 	.add('with emoji', () => (
-		<button>
+		<Button>
 			<span role="img" aria-label="so cool">
 				😀 😎 👍 💯
 			</span>
-		</button>
+		</Button>
 	));

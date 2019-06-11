@@ -1,13 +1,17 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, text, boolean, select } from '@storybook/addon-knobs';
+import { withKnobs, date, text, boolean, select } from '@storybook/addon-knobs';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import 'date-fns';
+import Grid from '@material-ui/core/Grid';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 
 storiesOf('Button', module)
 	.addDecorator(withKnobs)
@@ -79,3 +83,33 @@ storiesOf('Select', module).addDecorator(withKnobs).add('SelectField', () => {
 		</FormControl>
 	);
 }, { notes: 'A very simple selectField component' });
+
+storiesOf('Pickers', module).addDecorator(withKnobs).add('Date', () => {
+	const name = text('Label', 'Date');
+	let selectedDate = date('Date', new Date('2014-08-18T21:11:54'));
+
+	const handleDateChange = (date) => {
+		selectedDate = new Date(date);
+	};
+
+	return (
+		<MuiPickersUtilsProvider utils={DateFnsUtils}>
+			<Grid
+				container
+				style={{
+					grid: {
+						width: '60%',
+					},
+				}}
+			>
+				<KeyboardDatePicker
+					margin="normal"
+					label={name}
+					value={selectedDate}
+					onChange={handleDateChange}
+					disabled={boolean('Disabled', false)}
+				/>
+			</Grid>
+		</MuiPickersUtilsProvider>
+	);
+}, { notes: 'A very simple DatePicker component' });

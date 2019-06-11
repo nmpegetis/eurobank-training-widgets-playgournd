@@ -254,5 +254,23 @@ storiesOf('Board', module).addDecorator(withKnobs).add('Table', () => {
 		},
 	];
 
-	return data && <Table columns={columns} dataSource={data} />;
+	// TODO: For use in the exercise below
+	// const newProjectData = {
+	// 	unit: 'Centralized Services & Digital Branches',
+	// 	pem: '10100',
+	// 	title: 'Financial Terminal',
+	// 	desc: 'test4',
+	// 	supervisor: 'Super2',
+	// 	team: [ 'Member11', 'Member12', 'Member13' ],
+	// 	startingDate: chooseDaysBefore(0),
+	// 	endingDate: chooseDaysAfter(400),
+	// 	comments: 'fingers crossed',
+	// 	mandays: 900,
+	// 	lastUpdate: chooseDaysBefore(0),
+	// 	status: 'Started',
+	// };
+	// 	const newRow = object(name, newProjectData);
+
+	// TODO: make necessary changes below for newProjectData addition in dataSource
+	return <Table columns={columns} dataSource={data} />;
 }, { notes: 'A very simple Table component' });

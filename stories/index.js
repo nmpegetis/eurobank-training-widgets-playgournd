@@ -117,78 +117,140 @@ storiesOf('Pickers', module).addDecorator(withKnobs).add('Date', () => {
 }, { notes: 'A very simple DatePicker component' });
 
 storiesOf('Board', module).addDecorator(withKnobs).add('Table', () => {
+	const chooseDaysBefore = (days) =>
+		((d) => new Date(d.setDate(d.getDate() - days)))(new Date()).toLocaleDateString();
+	const chooseDaysAfter = (days) => ((d) => new Date(d.setDate(d.getDate() + days)))(new Date()).toLocaleDateString();
+
+	// TODO: For use in the exercise below
+	// const unit = [ 'Centralized Services & Digital Branches' ];
+	// const pem = [ '10000', '10001', '10010', '10011' ];
+	// const title = [ 'Lifemoments', 'PricingTool', 'LendingTool', 'WizardTool' ];
+	// const desc = [ 'test', 'test2', 'test3' ];
+	// const supervisor = [ 'Super1', 'Super2', 'Super3' ];
+	// const team = [
+	// 	[ 'Member1', 'Member2', 'Member3' ],
+	// 	[ 'Member4', 'Member5', 'Member6', 'Member7' ],
+	// 	[ 'Member8', 'Member9' ],
+	// 	[ 'Member10' ],
+	// ];
+	// const startingDate = [ chooseDaysBefore(10), chooseDaysBefore(32), chooseDaysBefore(15), chooseDaysBefore(45) ];
+	// const endingDate = [ chooseDaysAfter(40), chooseDaysAfter(60), chooseDaysAfter(50), chooseDaysAfter(4) ];
+	// const comments = [
+	// 	'nothing to mention',
+	// 	'low team capacity due to holiday season',
+	// 	'many experienced developers in team',
+	// ];
+	// const mandays = [ 100, 140, 150 ];
+	// const lastUpdate = [ chooseDaysBefore(3), chooseDaysBefore(1), chooseDaysBefore(0), , chooseDaysBefore(6) ];
+	// const status = [ 'Started', 'On going', 'Finishing' ];
+
+	// const projectStatusData = () => ({
+	// 	unit: unit[Math.floor(Math.random() * unit.length)],
+	// 	pem: pem[Math.floor(Math.random() * pem.length)],
+	// 	title: title[Math.floor(Math.random() * title.length)],
+	// 	desc: desc[Math.floor(Math.random() * desc.length)],
+	// 	supervisor: supervisor[Math.floor(Math.random() * supervisor.length)],
+	// 	team: team[Math.floor(Math.random() * team.length)],
+	// 	startingDate: startingDate[Math.floor(Math.random() * startingDate.length)],
+	// 	endingDate: endingDate[Math.floor(Math.random() * endingDate.length)],
+	// 	comments: comments[Math.floor(Math.random() * comments.length)],
+	// 	mandays: mandays[Math.floor(Math.random() * mandays.length)],
+	// 	lastUpdate: lastUpdate[Math.floor(Math.random() * lastUpdate.length)],
+	// 	status: status[Math.floor(Math.random() * status.length)],
+	// });
+
+	// TODO: Create an array of four(4) elements filled in with projectStatusData
+	// const data = ...
+
+	// TODO: Create an array of columns using projectStatusData
+	// const columns = ...
+
+	const data = [
+		{
+			unit: 'Centralized Services & Digital Branches',
+			pem: '10001',
+			title: 'Lifemoments',
+			desc: 'test2',
+			supervisor: 'Super3',
+			team: [ 'Member1', 'Member2', 'Member3' ],
+			startingDate: chooseDaysBefore(30),
+			endingDate: chooseDaysAfter(10),
+			comments: 'many experienced developers in team',
+			mandays: 140,
+			lastUpdate: chooseDaysBefore(0),
+			status: 'On going',
+		},
+	];
+
 	const columns = [
 		{
-			title: 'Name',
-			dataIndex: 'name',
-			key: 'name',
+			title: 'UNIT',
+			dataIndex: 'unit',
+			key: 'unit',
 			render: (text) => <a href="javascript:;">{text}</a>,
 		},
 		{
-			title: 'Age',
-			dataIndex: 'age',
-			key: 'age',
+			title: 'PEM',
+			dataIndex: 'pem',
+			key: 'pem',
 		},
 		{
-			title: 'Address',
-			dataIndex: 'address',
-			key: 'address',
+			title: 'TITLE',
+			dataIndex: 'title',
+			key: 'title',
 		},
 		{
-			title: 'Tags',
-			key: 'tags',
-			dataIndex: 'tags',
+			title: 'SUPERVISOR',
+			key: 'supervisor',
+			dataIndex: 'supervisor',
+		},
+		{
+			title: 'TEAM',
+			key: 'team',
+			dataIndex: 'team',
 			render: (tags) => (
 				<span>
 					{tags.map((tag) => {
-						let color = tag.length > 5 ? 'geekblue' : 'green';
-						if (tag === 'loser') {
-							color = 'volcano';
-						}
-						return (
-							<Tag color={color} key={tag}>
-								{tag.toUpperCase()}
-							</Tag>
-						);
+						console.log('tags', tag);
+						return <Tag key={tag}>{tag}</Tag>;
 					})}
 				</span>
 			),
 		},
 		{
-			title: 'Action',
-			key: 'action',
-			render: (text, record) => (
-				<span>
-					<a href="javascript:;">Invite {record.name}</a>
-					<Divider type="vertical" />
-					<a href="javascript:;">Delete</a>
-				</span>
+			title: 'STARTINGDATE',
+			key: 'startingDate',
+			dataIndex: 'startingDate',
+		},
+		{
+			title: 'ENDINGDATE',
+			key: 'endingDate',
+			dataIndex: 'endingDate',
+		},
+		{
+			title: 'COMMENTS',
+			key: 'comments',
+			dataIndex: 'comments',
+		},
+		{
+			title: 'MANDAYS',
+			key: 'mandays',
+			dataIndex: 'mandays',
+		},
+		{
+			title: 'LASTUPDATE',
+			key: 'lastUpdate',
+			dataIndex: 'lastUpdate',
+		},
+		{
+			title: 'STATUS',
+			key: 'status',
+			dataIndex: 'status',
+			render: (tag) => (
+				<Tag color={'geekblue'} key={tag}>
+					{tag.toUpperCase()}
+				</Tag>
 			),
-		},
-	];
-
-	const data = [
-		{
-			key: '1',
-
-			name: 'John Brown',
-			age: 32,
-			address: 'New York No. 1 Lake Park',
-			tags: [ 'nice', 'developer' ],
-		},
-		{
-			key: '2',
-			name: 'Jim Green',
-			age: 42,
-			address: 'London No. 1 Lake Park',
-			tags: [ 'loser' ],
-		},
-		{
-			key: '3',
-			name: 'Joe Black',
-			age: 32,
-			address: 'Sidney No. 1 Lake Park',
-			tags: [ 'cool', 'teacher' ],
 		},
 	];
 

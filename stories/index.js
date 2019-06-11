@@ -12,6 +12,8 @@ import 'date-fns';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import { Table, Divider, Tag } from 'antd';
+import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 
 storiesOf('Button', module)
 	.addDecorator(withKnobs)
@@ -113,3 +115,82 @@ storiesOf('Pickers', module).addDecorator(withKnobs).add('Date', () => {
 		</MuiPickersUtilsProvider>
 	);
 }, { notes: 'A very simple DatePicker component' });
+
+storiesOf('Board', module).addDecorator(withKnobs).add('Table', () => {
+	const columns = [
+		{
+			title: 'Name',
+			dataIndex: 'name',
+			key: 'name',
+			render: (text) => <a href="javascript:;">{text}</a>,
+		},
+		{
+			title: 'Age',
+			dataIndex: 'age',
+			key: 'age',
+		},
+		{
+			title: 'Address',
+			dataIndex: 'address',
+			key: 'address',
+		},
+		{
+			title: 'Tags',
+			key: 'tags',
+			dataIndex: 'tags',
+			render: (tags) => (
+				<span>
+					{tags.map((tag) => {
+						let color = tag.length > 5 ? 'geekblue' : 'green';
+						if (tag === 'loser') {
+							color = 'volcano';
+						}
+						return (
+							<Tag color={color} key={tag}>
+								{tag.toUpperCase()}
+							</Tag>
+						);
+					})}
+				</span>
+			),
+		},
+		{
+			title: 'Action',
+			key: 'action',
+			render: (text, record) => (
+				<span>
+					<a href="javascript:;">Invite {record.name}</a>
+					<Divider type="vertical" />
+					<a href="javascript:;">Delete</a>
+				</span>
+			),
+		},
+	];
+
+	const data = [
+		{
+			key: '1',
+
+			name: 'John Brown',
+			age: 32,
+			address: 'New York No. 1 Lake Park',
+			tags: [ 'nice', 'developer' ],
+		},
+		{
+			key: '2',
+			name: 'Jim Green',
+			age: 42,
+			address: 'London No. 1 Lake Park',
+			tags: [ 'loser' ],
+		},
+		{
+			key: '3',
+			name: 'Joe Black',
+			age: 32,
+			address: 'Sidney No. 1 Lake Park',
+			tags: [ 'cool', 'teacher' ],
+		},
+	];
+
+	return data && <Table columns={columns} dataSource={data} />;
+}, { notes: 'A very simple Table component' });

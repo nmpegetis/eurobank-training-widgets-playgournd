@@ -1,34 +1,62 @@
-## Overview React Documentation
+# Eurobank Training - Widgets Playground
+> #### In this repository we are going step-by-step to create a storybook playground for the widgets of [eurobank's training application](https://github.com/nmpegetis/eurobank-training) 
+> * [Step 0. Prerequisites](#0)  
+> * [Step 1. Create a storybook for React components](#1)  
+> * [Step 2. Add addons to a storybook for manipulating React components](#2)  
+> * [Step 3. Add React component widgets that use the Material-UI library](#3)  
+> * [Step 4. Add React component widgets that use the Ant Design library](#4)  
+> * [Step 5. `Workshop` Create generators for columns and data for Table widget](#5)
+> * [Step 6. *`Workshop solution`* for Table widget](#6)
+
+<a name="0">
+
+### Prerequisites
+#### Overview React Documentation
 * https://reactjs.org/docs/hello-world.html 
 
-## Overview about npm and package.json
-* https://www.npmjs.com/what-is-npm
-* https://docs.npmjs.com/about-npm/
-* https://www.w3schools.com/whatis/whatis_npm.asp
+#### Overview about npm and package.json
+> <strong>Useful links:</strong>
+> * https://www.npmjs.com/what-is-npm
+> * https://docs.npmjs.com/about-npm/
+> * https://www.w3schools.com/whatis/whatis_npm.asp
 
-## Let's start coding
-* npm init 
-  * starts a project package
+<a name="1">
 
-#### 1. Our first task is to create a storybook to easily preview and interact with React components  
-* https://storybook.js.org/
-* https://storybook.js.org/docs/guides/quick-start-guide/
-  
+### 1. Create a storybook for React components  
+#### Let's start coding
+Create a new package where we are going to create the widgets playground
+```sh
+npm init 
 ```
+Our 1<sup>st</sup> task is to create a storybook to easily preview and interact with React components  
+> <strong>Useful links:</strong>
+> * https://storybook.js.org/
+> * https://storybook.js.org/docs/guides/quick-start-guide/
+  
+```sh
   npx -p @storybook/cli sb init --type react
   npm install react react-dom --save
   npm install babel-loader @babel/core --save-dev 
 ```
-* npm script
-`{
+
+Open `package.json` and append `scripts` entry
+```
+...
+
+{
   "scripts": {
     "storybook": "start-storybook"
   }
-}`
+}
 
-* Create storybook config file
-  * mkdir .storybook && touch .storybook/config.js 
-  
+...
+```
+
+Create a storybook config file `.storybook/config`:
+```sh
+mkdir .storybook && touch .storybook/config.js 
+```  
+and fill in:
 ```javascript
 import { configure } from '@storybook/react';
 function loadStories() {
@@ -37,8 +65,12 @@ function loadStories() {
 }
 configure(loadStories, module);
 ```
-* _
-  * mkdir stories && touch stories/index.js
+then create a `stories` directory with `index.js` inside
+```sh
+mkdir stories && touch stories/index.js
+```
+and fill in:
+
 ```javascript
 import React from 'react';
 import { storiesOf } from '@storybook/react';
@@ -60,27 +92,38 @@ storiesOf('Button', module)
     <Button><span role="img" aria-label="so cool">😀 😎 👍 💯</span></Button>
   ));   
 ```
-* _
-  * npm run storybook
 
-`branch: storybook-starter`
+That's it! You are done!
+Run
+```sh
+npm run storybook
+```
+
+In order to checkout the checkpoint branch `storybook-starter` you may:
+
+`git checkout storybook-starter`
 
 ---
+<a name="2">
 
-#### 2. Our 2nd task is to use addons in storybook 
-```
+#### Step 2. Add addons to a storybook for manipulating React components
+
+Our 2<sup>nd</sup> task is to use addons in storybook 
+
+Firstly we need to install addons packages that we are going to use:
+```sh
 npm i -D @storybook/addons @storybook/addon-actions @storybook/addon-knobs @storybook/addon-notes (adds notes for components, knobs, actions)
 touch .storybook/addons.js
 ```
 
-* add in .storybook/addons.js the following imports
+then create file `.storybook/addons.js` and fill in with the following imports:
 
 ```javascript 
 import '@storybook/addon-actions/register';
 import '@storybook/addon-knobs/register';
 import '@storybook/addon-notes/register';
 ```
-* add in stories/index.js
+Finally, edit `stories/index.js` to use addons:
 
 ```javascript
 import React from 'react';
@@ -121,29 +164,38 @@ import { withKnobs, text, boolean, object } from '@storybook/addon-knobs';
 		</button>
 	));
 ```
-* for more info on addons visit: 
-	* https://storybooks-official.netlify.com/?path=/story/addons-knobs-withknobs--tweaks-static-values
-	* https://storybook.js.org/docs/addons/addon-gallery/
+> <strong>Useful links:</strong>
+>	* https://storybooks-official.netlify.com/?path=/story/addons-knobs-withknobs--tweaks-static-values
+>	* https://storybook.js.org/docs/addons/addon-gallery/
 
-
-
-```
+Run storybook to see the results
+```sh
 npm run storybook
 ```
-`branch: storybook-addons`
+In order to checkout the checkpoint branch `storybook-addons` you may:
+
+`git checkout storybook-addons`
 
 ---
+<a name="3"></a>
 
-#### 3. Our 3rd task is to use Material-UI components in storybook 
+#### Step 3. Add React component widgets that use the Material-UI library
 
-* https://material-ui.com/
-```
+Our 3<sup>rd</sup> task is to use Material-UI components in storybook 
+
+> <strong>Useful links:</strong>
+> * https://material-ui.com/
+
+Install `material-ui` packages
+```sh
 npm i @material-ui/core @material-ui/icons @material-ui/styles
 ```
 
 > `Hands on button creation`
 
+Use Material-UI to create the widgets for our [application](https://github.com/nmpegetis/eurobank-training)
 ###### Button:
+`stories/index.js`
 ```javascript
 import React from 'react';
 import { storiesOf } from '@storybook/react';
@@ -186,6 +238,7 @@ storiesOf('Button', module)
 ```
 
 ###### TextField:
+`stories/index.js`
 ```javascript
 ...
 
@@ -207,6 +260,7 @@ storiesOf('Field', module).addDecorator(withKnobs).add('TextField', () => {
 ```
 
 ###### SelectField:
+`stories/index.js`
 ```javascript
 ...
 
@@ -234,10 +288,15 @@ storiesOf('Select', module).addDecorator(withKnobs).add('SelectField', () => {
 ```
 
 ###### DatePicker:
-```
+`stories/index.js`
+
+Install requisite packages first:
+```sh
 npm i @material-ui/pickers @date-io/date-fns date-fns@next
 ```
-* https://material-ui-pickers.dev/
+
+> <strong>Useful links:</strong>
+> * https://material-ui-pickers.dev/
 
 ```javascript
 ...
@@ -280,38 +339,75 @@ storiesOf('Pickers', module).addDecorator(withKnobs).add('Date', () => {
 	);
 }, { notes: 'A very simple DatePicker component' });
 ```
-```
+
+That's it! You are done!
+Run
+```sh
 npm run storybook
 ```
 
-`branch: storybook-material-ui`
+In order to checkout the checkpoint branch `storybook-material-ui` you may:
+
+`git checkout storybook-material-ui`
 
 ---
+<a name="4"></a>
 
-#### 4. Our 4th task is to use Ant Design components in storybook 
+#### Step 4. Add React component widgets that use the Ant Design library 
 
-* https://ant.design
-```
+Our 4<sup>th</sup> task is to use Ant Design components in storybook 
+
+
+> <strong>Useful links:</strong>
+> * https://ant.design
+
+Install `antd` package 
+```sh
 npm i antd
 ```
 
 > `Hands on table creation`
 
 ###### Table:
+check `stories/index.js` for code
 
-`branch: storybook-antd-init`
+Run storybook to see the results
+```sh
+npm run storybook
+```
+In order to checkout the checkpoint branch `storybook-antd-init` you may:
+
+`git checkout storybook-antd-init`
 
 ---
-#### 5. Our 5th task is to work together in creating data and columns for table 
-* code snippets used
-	* https://stackoverflow.com/a/5511591/1995605
-	* https://stackoverflow.com/a/4550514/1995605
 
-`branch: storybook-antd-workshop`
+<a name="5"></a>
+
+#### Step 5. `Workshop` Create generators for columns and data for Table widget
+
+Our 5<sup>th</sup> task is to work together in creating data and columns for table 
+
+> <strong>Useful links:</strong>
+> * code snippets used:
+>	* https://stackoverflow.com/a/5511591/1995605
+>	* https://stackoverflow.com/a/4550514/1995605
+
+> ## Workshop
+> checkout the checkpoint branch 
+> `storybook-antd-workshop`. There there is some **//TODO** code for you to append. In class, append this code with the instructor
+> To checkout the branch you can:
+> * `git checkout storybook-antd-workshop`
 
 ---
 
-###### Solution 
+<a name="6"></a>
+
+#### Step 6. *`Workshop solution`* for Table widget
+
+The final solution of the above workshop follows below:
+
+###### Table:
+`stories/index.js`
 ```javascript
 ...
 
@@ -321,7 +417,7 @@ import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 
 ...
 
-storiesOf('Components', module).addDecorator(withKnobs).add('Table', () => {
+storiesOf('Widgets', module).addDecorator(withKnobs).add('Table', () => {
 	const chooseDaysBefore = (days) =>
 		((d) => new Date(d.setDate(d.getDate() - days)))(new Date()).toLocaleDateString();
 	const chooseDaysAfter = (days) => ((d) => new Date(d.setDate(d.getDate() + days)))(new Date()).toLocaleDateString();
@@ -414,14 +510,22 @@ storiesOf('Components', module).addDecorator(withKnobs).add('Table', () => {
 }, { notes: 'A very simple Table component' });
 ```
 
-`branch: storybook-antd`
+Run storybook to see the results
+```sh
+npm run storybook
+```
+In order to checkout the checkpoint branch `storybook-antd` you may:
+
+`git checkout storybook-antd`
 
 ---
 
-#### Let's continue. ProjectStatus App creation
 
-* introduction to CRA
-* switch to another directory
-* https://facebook.github.io/create-react-app/docs/getting-started
-* check repository eurobank-projectstatus
+## *That's it! You are done!*
+
+> #### Let's continue. [ProjectStatus App creation](https://github.com/nmpegetis/eurobank-training)
+> Prerequisites:
+> * introduction to [CRA](https://facebook.github.io/create-react-app/docs/getting-started)
+> * you should switch to a diffenent  directory than this one
+> * check repository [eurobank-training]((https://github.com/nmpegetis/eurobank-training))
 
